@@ -62,7 +62,6 @@ C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\bin\Debug\netcoreapp3.1
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\bin\Debug\netcoreapp3.1\System.Text.Encodings.Web.dll
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\bin\Debug\netcoreapp3.1\System.Text.Json.dll
-C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\PlayerMusic.csproj.AssemblyReference.cache
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\PlayerMusic.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\PlayerMusic.AssemblyInfoInputs.cache
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\PlayerMusic.AssemblyInfo.cs
@@ -76,8 +75,6 @@ C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\PlayerMusic.TagHelpers.input.cache
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\PlayerMusic.TagHelpers.output.cache
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\PlayerMusic.RazorCoreGenerate.cache
-C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\Razor\Views\Music\Cadastro.cshtml.g.cs
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\Razor\Views\Music\Index.cshtml.g.cs
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs

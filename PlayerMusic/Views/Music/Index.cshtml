@@ -1,55 +1,76 @@
 ﻿@model List<MusicModel>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-    <h2>Músicas Disponíveis</h2>
+<h2>Músicas Disponíveis</h2>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Autor</th>
-                <th>Genero</th>
-                <th>Reproduzir</th>
-                <th>Excluir</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var musica in Model)
-            {
+<div class="search-bar">
+    <input type="text" id="search-name" placeholder="Buscar por Nome">
+    <input type="text" id="search-genre" placeholder="Buscar por Gênero">
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Autor</th>
+            <th>Genero</th>
+            <th>Reproduzir</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var musica in Model)
+        {
             <tr>
                 <td>@musica.NomeMusica</td>
                 <td>@musica.Autor</td>
                 <td>@musica.Genero</td>
                 <td>
-                    <a href="#" class="play-button" data-music-directory="@musica.MusicaDiretorio">Reproduzir</a>
+                    <a href="#" class="play-button" data-music-directory="@musica.MusicaDiretorio"><i class="fas fa-play"></i></a>
                 </td>
                 <td>
-                    <a asp-action="Delete" asp-route-id="@musica.Id" onclick="return confirm('Tem certeza que deseja excluir esta música?')">Excluir</a>
+                    <a asp-action="Delete" asp-route-id="@musica.Id" onclick="return confirm('Tem certeza que deseja excluir esta música?')"><i class="fas fa-trash"></i></a>
                 </td>
             </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
-    <audio id="music-player" controls>
-    </audio>
+<audio id="music-player" controls>
+</audio>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
+<script>
+    $(document).ready(function () {
 
-            $(".play-button").on("click", function () {
+        $(".play-button").on("click", function () {
 
-                var musicDirectory = $(this).data("music-directory");
+            var musicDirectory = $(this).data("music-directory");
 
-                $("#music-player").attr("src", "/Musicas/" + musicDirectory);
+            $("#music-player").attr("src", "/Musicas/" + musicDirectory);
 
-                $("#music-player")[0].play();
-            });
+            $("#music-player")[0].play();
         });
 
-    </script>
+        $("#search-name, #search-genre").on("input", function () {
+            var searchName = $("#search-name").val().toLowerCase();
+            var searchGenre = $("#search-genre").val().toLowerCase();
+
+            $("table tbody tr").each(function () {
+                var name = $(this).find("td:eq(0)").text().toLowerCase();
+                var genre = $(this).find("td:eq(2)").text().toLowerCase();
+                if (name.includes(searchName) && genre.includes(searchGenre)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+
+</script>
 
 
