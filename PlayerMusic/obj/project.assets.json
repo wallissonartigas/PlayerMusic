@@ -943,11 +943,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dev\\source\\repos\\PlayerMusic\\PlayerMusic\\PlayerMusic.csproj",
+      "projectUniqueName": "C:\\Users\\dev\\source\\repos\\GitHub\\PlayerMusic\\PlayerMusic\\PlayerMusic.csproj",
       "projectName": "PlayerMusic",
-      "projectPath": "C:\\Users\\dev\\source\\repos\\PlayerMusic\\PlayerMusic\\PlayerMusic.csproj",
+      "projectPath": "C:\\Users\\dev\\source\\repos\\GitHub\\PlayerMusic\\PlayerMusic\\PlayerMusic.csproj",
       "packagesPath": "C:\\Users\\dev\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dev\\source\\repos\\PlayerMusic\\PlayerMusic\\obj\\",
+      "outputPath": "C:\\Users\\dev\\source\\repos\\GitHub\\PlayerMusic\\PlayerMusic\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
