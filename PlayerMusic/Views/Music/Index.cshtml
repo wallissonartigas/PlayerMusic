@@ -1,0 +1,55 @@
+﻿@model List<MusicModel>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <h2>Músicas Disponíveis</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Autor</th>
+                <th>Genero</th>
+                <th>Reproduzir</th>
+                <th>Excluir</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var musica in Model)
+            {
+            <tr>
+                <td>@musica.NomeMusica</td>
+                <td>@musica.Autor</td>
+                <td>@musica.Genero</td>
+                <td>
+                    <a href="#" class="play-button" data-music-directory="@musica.MusicaDiretorio">Reproduzir</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@musica.Id" onclick="return confirm('Tem certeza que deseja excluir esta música?')">Excluir</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    <audio id="music-player" controls>
+    </audio>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $(".play-button").on("click", function () {
+
+                var musicDirectory = $(this).data("music-directory");
+
+                $("#music-player").attr("src", "/Musicas/" + musicDirectory);
+
+                $("#music-player")[0].play();
+            });
+        });
+
+    </script>
+
+
