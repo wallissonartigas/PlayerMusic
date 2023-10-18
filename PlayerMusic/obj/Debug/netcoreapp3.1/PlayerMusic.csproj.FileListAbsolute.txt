@@ -89,3 +89,4 @@ C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\PlayerMusic.dll
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\PlayerMusic.pdb
 C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\PlayerMusic.genruntimeconfig.cache
+C:\Users\dev\source\repos\GitHub\PlayerMusic\PlayerMusic\obj\Debug\netcoreapp3.1\PlayerMusic.csproj.AssemblyReference.cache

@@ -8,6 +8,9 @@ using System;
 using Newtonsoft.Json;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace PlayerMusic.Controllers
 {
@@ -15,12 +18,14 @@ namespace PlayerMusic.Controllers
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
 
-        public MusicController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        public MusicController(IHttpClientFactory httpClientFactory, IConfiguration configuration , IHostingEnvironment hostingEnvironment)
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public async Task<IActionResult> Index()
@@ -31,12 +36,12 @@ namespace PlayerMusic.Controllers
             try
             {
                 httpClient.BaseAddress = new Uri(apiBaseUrl);
-                var response = await httpClient.GetFromJsonAsync<List<MusicModel>>("api/music"); // Substitua pela URL da sua API
+                var response = await httpClient.GetFromJsonAsync<List<MusicModel>>("api/music"); 
                 return View(response);
             }
             catch (HttpRequestException e)
             {
-                // Trate erros de solicitação aqui
+              
                 return View(new List<MusicModel>());
             }
         }
@@ -77,33 +82,64 @@ namespace PlayerMusic.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Salvar([Bind("Autor,Genero,AlbumDiretorio,MusicaDiretorio,NomeMusica")] MusicModel musica)
+        public async Task<IActionResult> Salvar([Bind("Autor,Genero,AlbumDiretorio,MusicaDiretorio,NomeMusica")] MusicModel musica, IFormFile AlbumImageFile, IFormFile MusicaDiretorioFile)
         {
             if (ModelState.IsValid)
             {
-                using (var httpClient = new HttpClient())
+                if (AlbumImageFile != null && AlbumImageFile.Length > 0 && MusicaDiretorioFile != null && MusicaDiretorioFile.Length > 0)
                 {
-                    var apiBaseUrl = _configuration["ApiSettings:ApiMusicUrl"];
-
-                    httpClient.BaseAddress = new Uri(apiBaseUrl);
-
-                    var content = new StringContent(JsonConvert.SerializeObject(musica), Encoding.UTF8, "application/json");
-
-                    var response = await httpClient.PostAsync("api/music", content);
-
-                    if (response.IsSuccessStatusCode)
+          
+                    var uniqueFileName = Guid.NewGuid() + "_" + AlbumImageFile.FileName ;
+                    var uniqueFileNameMusic = Guid.NewGuid() + "_" + MusicaDiretorioFile.FileName;
+               
+                    var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "images", uniqueFileName);
+                    var filePathMusic = Path.Combine(@"C:\Users\dev\source\repos\GitHub\PlayerMusic\MusicasAlbum", uniqueFileNameMusic);
+                  
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        return RedirectToAction("Index"); 
+                        AlbumImageFile.CopyTo(stream);
                     }
-                    else
+
+                    using (var stream = new FileStream(filePathMusic, FileMode.Create))
                     {
-                        TempData["ErrorMessage"] = "Falha ao salvar a música.";
-                        return View(musica);
+                        await MusicaDiretorioFile.CopyToAsync(stream);
                     }
+
+                 
+                    musica.AlbumDiretorio = uniqueFileName;
+                    musica.MusicaDiretorio = uniqueFileNameMusic;
+
+                    using (var httpClient = new HttpClient())
+                    {
+                        var apiBaseUrl = _configuration["ApiSettings:ApiMusicUrl"];
+
+                        httpClient.BaseAddress = new Uri(apiBaseUrl);
+
+                        var musicaContent = new StringContent(JsonConvert.SerializeObject(musica), Encoding.UTF8, "application/json");
+
+                        var response = await httpClient.PostAsync("api/music", musicaContent);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = "Falha ao salvar a música.";
+                            return View(musica);
+                        }
+                    }
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Imagem do álbum não foi fornecida.";
+                    return View(musica);
                 }
             }
             return View(musica);
         }
+
+
 
 
     }

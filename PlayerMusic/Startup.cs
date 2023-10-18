@@ -7,6 +7,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -51,8 +52,14 @@ namespace PlayerMusic
 
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(@"C:\Users\dev\source\repos\PlayerMusic\MusicasAlbum"),
+                FileProvider = new PhysicalFileProvider(@"C:\Users\dev\source\repos\GitHub\PlayerMusic\MusicasAlbum"),
                 RequestPath = "/Musicas"
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "wwwroot/images")),
+                RequestPath = "/images"
             });
 
             app.UseEndpoints(endpoints =>

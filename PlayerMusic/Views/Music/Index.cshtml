@@ -1,76 +1,84 @@
-﻿@model List<MusicModel>
+﻿<style>
+    .music-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .music-item {
+        width: calc(30% - 20px);
+        margin-bottom: 20px;
+        text-align: center;
+        border: 1px solid #ddd;
+        padding: 10px;
+        position: relative;
+    }
+
+        .music-item img {
+            max-width: 100%;
+            height: auto;
+        }
+
+    .delete-button {
+        cursor: pointer;
+        color: red;
+    }
+
+    .music-player {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+    }
+</style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 <h2>Músicas Disponíveis</h2>
 
-<div class="search-bar">
-    <input type="text" id="search-name" placeholder="Buscar por Nome">
-    <input type="text" id="search-genre" placeholder="Buscar por Gênero">
+<div class="music-list">
+    @foreach (var musica in Model)
+    {
+        <div class="music-item">
+            <img src="~/images/@musica.AlbumDiretorio" alt="Capa do Álbum">
+            <div class="music-info">
+                <h3>@musica.NomeMusica</h3>
+                <p>@musica.Autor</p>
+                <p>@musica.Genero</p>
+            </div>
+            <a href="#" class="play-button" data-music-directory="@musica.MusicaDiretorio"><i class="fas fa-play"></i></a>
+            <a href="#" class="delete-button" data-music-id="@musica.Id"><i class="fas fa-trash"></i></a>
+            <audio class="music-player" controls></audio>
+        </div>
+    }
 </div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Autor</th>
-            <th>Genero</th>
-            <th>Reproduzir</th>
-            <th>Excluir</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var musica in Model)
-        {
-            <tr>
-                <td>@musica.NomeMusica</td>
-                <td>@musica.Autor</td>
-                <td>@musica.Genero</td>
-                <td>
-                    <a href="#" class="play-button" data-music-directory="@musica.MusicaDiretorio"><i class="fas fa-play"></i></a>
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@musica.Id" onclick="return confirm('Tem certeza que deseja excluir esta música?')"><i class="fas fa-trash"></i></a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<audio id="music-player" controls>
-</audio>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
     $(document).ready(function () {
 
         $(".play-button").on("click", function () {
-
             var musicDirectory = $(this).data("music-directory");
+            var musicPlayer = $(this).closest(".music-item").find(".music-player");
 
-            $("#music-player").attr("src", "/Musicas/" + musicDirectory);
+            musicPlayer.attr("src", "/Musicas/" + musicDirectory);
+            musicPlayer.show();
+            musicPlayer[0].play();
+            $(this).find("i").removeClass("fa-play").addClass("fa-pause"); 
 
-            $("#music-player")[0].play();
+        $(".delete-button").on("click", function () {
+            var musicId = $(this).data("music-id");
+
+            if (confirm("Tem certeza de que deseja excluir esta música?")) {
+                $(this).closest(".music-item").remove();
+                window.location.href = "/Music/Delete?id=" + musicId;
+            }
         });
 
-        $("#search-name, #search-genre").on("input", function () {
-            var searchName = $("#search-name").val().toLowerCase();
-            var searchGenre = $("#search-genre").val().toLowerCase();
-
-            $("table tbody tr").each(function () {
-                var name = $(this).find("td:eq(0)").text().toLowerCase();
-                var genre = $(this).find("td:eq(2)").text().toLowerCase();
-                if (name.includes(searchName) && genre.includes(searchGenre)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
+        $("audio").on("pause", function () {
+            $(".play-button i").removeClass("fa-pause").addClass("fa-play"); 
         });
     });
-
 </script>
-
-
